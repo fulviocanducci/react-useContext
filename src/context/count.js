@@ -2,17 +2,20 @@ import React, { createContext, useContext, useState } from "react";
 
 const CountContext = createContext();
 
-export default function CounterProvider({ children }) {
+const CounterProvider = ({ children }) => {
   const [value, setValue] = useState(0);
+  const handleIncrement = () => setValue(value + 1);
   return (
-    <CountContext.Provider value={{ value, setValue }}>
+    <CountContext.Provider value={{ value, handleIncrement }}>
       {children}
     </CountContext.Provider>
   );
-}
+};
 
-export function useCount() {
+export const useCount = () => {
   const context = useContext(CountContext);
-  const { value, setValue } = context;
-  return { value, setValue };
-}
+  const { value, handleIncrement } = context;
+  return { value, handleIncrement };
+};
+
+export default CounterProvider;
